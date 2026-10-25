@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Shield, FileText, Mail, CheckCircle, Smartphone } from 'lucide-react';
-import { ModalType, StoreLinks } from '../types';
+import { ModalType, StoreLinks, LegalTabType } from '../types';
 import { StoreButtons } from './StoreButtons';
 
 interface LegalModalsProps {
@@ -8,6 +8,7 @@ interface LegalModalsProps {
   onClose: () => void;
   links: StoreLinks;
   onOpenStoreConfig: () => void;
+  onOpenFullLegalPage?: (tab: LegalTabType) => void;
 }
 
 export const LegalModals: React.FC<LegalModalsProps> = ({
@@ -15,6 +16,7 @@ export const LegalModals: React.FC<LegalModalsProps> = ({
   onClose,
   links,
   onOpenStoreConfig,
+  onOpenFullLegalPage,
 }) => {
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [contactName, setContactName] = useState('');
@@ -85,10 +87,21 @@ export const LegalModals: React.FC<LegalModalsProps> = ({
               </p>
             </div>
 
-            <div className="pt-4 flex justify-end">
+            <div className="pt-4 flex items-center justify-between border-t border-stone-100">
+              {onOpenFullLegalPage && (
+                <button
+                  onClick={() => {
+                    onClose();
+                    onOpenFullLegalPage('privacy');
+                  }}
+                  className="text-xs font-semibold text-[#D9771A] hover:underline cursor-pointer"
+                >
+                  View Full Official Policy (Store Version) →
+                </button>
+              )}
               <button
                 onClick={onClose}
-                className="px-5 py-2 text-xs font-semibold text-white bg-stone-900 rounded-xl hover:bg-stone-800 transition-colors cursor-pointer"
+                className="px-5 py-2 text-xs font-semibold text-white bg-stone-900 rounded-xl hover:bg-stone-800 transition-colors cursor-pointer ml-auto"
               >
                 Close
               </button>
@@ -128,10 +141,21 @@ export const LegalModals: React.FC<LegalModalsProps> = ({
               </p>
             </div>
 
-            <div className="pt-4 flex justify-end">
+            <div className="pt-4 flex items-center justify-between border-t border-stone-100">
+              {onOpenFullLegalPage && (
+                <button
+                  onClick={() => {
+                    onClose();
+                    onOpenFullLegalPage('terms');
+                  }}
+                  className="text-xs font-semibold text-[#D9771A] hover:underline cursor-pointer"
+                >
+                  View Full Terms of Use (Store EULA) →
+                </button>
+              )}
               <button
                 onClick={onClose}
-                className="px-5 py-2 text-xs font-semibold text-white bg-stone-900 rounded-xl hover:bg-stone-800 transition-colors cursor-pointer"
+                className="px-5 py-2 text-xs font-semibold text-white bg-stone-900 rounded-xl hover:bg-stone-800 transition-colors cursor-pointer ml-auto"
               >
                 Accept & Close
               </button>

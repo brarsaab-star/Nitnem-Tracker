@@ -3,4 +3,8 @@ export interface StoreLinks {
   googlePlayStore: string;
 }
 
-export type ModalType = 'privacy' | 'terms' | 'contact' | 'config-links' | null;
+export type ModalType = 'privacy' | 'terms' | 'parental' | 'contact' | 'config-links' | null;
+
+export type LegalTabType = 'privacy' | 'terms' | 'parental';
+
+export type CurrentView = 'home' | 'legal';

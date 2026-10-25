@@ -2,17 +2,19 @@ import React from 'react';
 import { Settings } from 'lucide-react';
 import { AppLogo } from './AppLogo';
 import { StoreButtons } from './StoreButtons';
-import { ModalType, StoreLinks } from '../types';
+import { ModalType, StoreLinks, LegalTabType } from '../types';
 
 interface FooterProps {
   links: StoreLinks;
   onOpenModal: (type: ModalType) => void;
+  onOpenLegalPage: (tab: LegalTabType) => void;
   onConfigureStoreClick: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   links,
   onOpenModal,
+  onOpenLegalPage,
   onConfigureStoreClick,
 }) => {
   return (
@@ -75,17 +77,24 @@ export const Footer: React.FC<FooterProps> = ({
 
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-xs text-stone-600">
               <button
-                onClick={() => onOpenModal('privacy')}
+                onClick={() => onOpenLegalPage('privacy')}
                 className="hover:text-stone-900 transition-colors cursor-pointer underline-offset-2 hover:underline"
               >
                 Privacy Policy
               </button>
               <span>·</span>
               <button
-                onClick={() => onOpenModal('terms')}
+                onClick={() => onOpenLegalPage('terms')}
                 className="hover:text-stone-900 transition-colors cursor-pointer underline-offset-2 hover:underline"
               >
                 Terms of Use
+              </button>
+              <span>·</span>
+              <button
+                onClick={() => onOpenLegalPage('parental')}
+                className="hover:text-stone-900 transition-colors cursor-pointer underline-offset-2 hover:underline"
+              >
+                Child Safety
               </button>
               <span>·</span>
               <button

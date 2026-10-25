@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { AppLogo } from './AppLogo';
+import { LegalTabType } from '../types';
 
 interface NavbarProps {
   onPutNitnemFirstClick: () => void;
   onOpenConfig?: () => void;
+  onOpenLegalPage?: (tab: LegalTabType) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onPutNitnemFirstClick,
   onOpenConfig,
+  onOpenLegalPage,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -110,6 +113,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               Download
             </a>
+            {onOpenLegalPage && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenLegalPage('privacy');
+                }}
+                className="text-left px-3 py-2.5 rounded-xl text-sm font-medium text-stone-700 hover:bg-stone-100 cursor-pointer"
+              >
+                Privacy & Legal
+              </button>
+            )}
           </nav>
           
           <div className="pt-2">

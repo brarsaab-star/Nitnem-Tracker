@@ -7,15 +7,40 @@ import { ForParents } from './components/ForParents';
 import { FinalCTA } from './components/FinalCTA';
 import { Footer } from './components/Footer';
 import { LegalModals } from './components/LegalModals';
+import { LegalPage } from './components/LegalPage';
 import { StoreConfigModal } from './components/StoreConfigModal';
-import { ModalType, StoreLinks } from './types';
+import { ModalType, StoreLinks, LegalTabType, CurrentView } from './types';
 
 const DEFAULT_STORE_LINKS: StoreLinks = {
   appleAppStore: '#',
   googlePlayStore: '#',
 };
 
+function detectInitialView(): { view: CurrentView; legalTab: LegalTabType } {
+  if (typeof window === 'undefined') {
+    return { view: 'home', legalTab: 'privacy' };
+  }
+  const hash = window.location.hash.toLowerCase();
+  const path = window.location.pathname.toLowerCase();
+  const search = window.location.search.toLowerCase();
+
+  if (hash.includes('privacy') || path === '/privacy' || search.includes('privacy')) {
+    return { view: 'legal', legalTab: 'privacy' };
+  }
+  if (hash.includes('terms') || path === '/terms' || search.includes('terms')) {
+    return { view: 'legal', legalTab: 'terms' };
+  }
+  if (hash.includes('parental') || path === '/parental' || search.includes('parental') || hash.includes('child')) {
+    return { view: 'legal', legalTab: 'parental' };
+  }
+  return { view: 'home', legalTab: 'privacy' };
+}
+
 export default function App() {
+  const initialRouting = detectInitialView();
+  const [currentView, setCurrentView] = useState<CurrentView>(initialRouting.view);
+  const [legalTab, setLegalTab] = useState<LegalTabType>(initialRouting.legalTab);
+
   const [storeLinks, setStoreLinks] = useState<StoreLinks>(() => {
     try {
       const saved = localStorage.getItem('nitnem_store_links');
@@ -31,17 +56,66 @@ export default function App() {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
 
+  // Listen to browser back/forward and hash changes
+  useEffect(() => {
+    const handleRouteCheck = () => {
+      const routing = detectInitialView();
+      setCurrentView(routing.view);
+      setLegalTab(routing.legalTab);
+    };
+
+    window.addEventListener('hashchange', handleRouteCheck);
+    window.addEventListener('popstate', handleRouteCheck);
+    return () => {
+      window.removeEventListener('hashchange', handleRouteCheck);
+      window.removeEventListener('popstate', handleRouteCheck);
+    };
+  }, []);
+
   const handleSaveStoreLinks = (newLinks: StoreLinks) => {
     setStoreLinks(newLinks);
     localStorage.setItem('nitnem_store_links', JSON.stringify(newLinks));
   };
 
   const scrollToDownload = () => {
+    if (currentView === 'legal') {
+      setCurrentView('home');
+      window.history.pushState(null, '', '#download');
+      setTimeout(() => {
+        const el = document.getElementById('download');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return;
+    }
     const el = document.getElementById('download');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const handleOpenLegalPage = (tab: LegalTabType) => {
+    setLegalTab(tab);
+    setCurrentView('legal');
+    window.history.pushState(null, '', `#/${tab}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBackToHome = () => {
+    setCurrentView('home');
+    document.title = 'Nitnem Tracker — Block Distractions. Put Waheguru First.';
+    window.history.pushState(null, '', window.location.pathname);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Dedicated Full Legal Page view (for direct URL linking on App Store & Google Play Console)
+  if (currentView === 'legal') {
+    return (
+      <LegalPage
+        initialTab={legalTab}
+        onBackToHome={handleBackToHome}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-stone-900 selection:bg-[#F28C28] selection:text-white flex flex-col font-sans antialiased">
@@ -49,6 +123,7 @@ export default function App() {
       <Navbar
         onPutNitnemFirstClick={scrollToDownload}
         onOpenConfig={() => setIsConfigOpen(true)}
+        onOpenLegalPage={handleOpenLegalPage}
       />
 
       {/* Main Page Flow */}
@@ -81,6 +156,7 @@ export default function App() {
       <Footer
         links={storeLinks}
         onOpenModal={(type) => setActiveModal(type)}
+        onOpenLegalPage={handleOpenLegalPage}
         onConfigureStoreClick={() => setIsConfigOpen(true)}
       />
 
@@ -93,6 +169,7 @@ export default function App() {
           setActiveModal(null);
           setIsConfigOpen(true);
         }}
+        onOpenFullLegalPage={handleOpenLegalPage}
       />
 
       {/* Store Link & Logo Configuration Modal */}
