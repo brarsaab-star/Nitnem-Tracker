@@ -1,6 +1,6 @@
 {
   "name": "Nitnem Tracker",
-  "description": "Block distractions. Complete your Nitnem. Put Waheguru first. A mobile app designed to help build discipline by restricting selected distracting apps until your daily Nitnem prayers are completed.",
+  "description": "Block distractions. Complete your Nitnem. Put Waheguru first. A mobile app designed to help build spiritual discipline by restricting selected distracting apps until your daily Sikh prayers, Banis, and Gurbani Path are completed.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

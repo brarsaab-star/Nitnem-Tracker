@@ -170,8 +170,8 @@ export const LegalPage: React.FC<LegalPageProps> = ({
               </p>
               <div className="text-xs bg-stone-50 border border-stone-200 rounded-xl p-3 text-stone-700 font-mono">
                 App Name: Nitnem Tracker<br />
-                Support & Privacy Inquiries: support@nitnemtracker.app<br />
-                Data Protection Officer / Developer Email: privacy@nitnemtracker.app
+                Support & Privacy Inquiries: info@nitnemtracker.com<br />
+                Data Protection Officer / Developer Email: info@nitnemtracker.com
               </div>
             </section>
 
@@ -288,7 +288,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                   <strong>Account Deletion (Apple Guideline 5.1.1(v)):</strong> If an optional account feature is enabled, users can permanently delete their account and associated data directly within the mobile app settings.
                 </li>
                 <li>
-                  <strong>User Rights:</strong> Under GDPR and CCPA, you have the right to access, rectify, or erase any personal data held by us. Since data is stored locally on your device, clearing app storage executes instant, total erasure. For assistance, contact <strong>privacy@nitnemtracker.app</strong>.
+                  <strong>User Rights:</strong> Under GDPR and CCPA, you have the right to access, rectify, or erase any personal data held by us. Since data is stored locally on your device, clearing app storage executes instant, total erasure. For assistance, contact <strong>info@nitnemtracker.com</strong>.
                 </li>
               </ul>
             </section>
@@ -313,8 +313,8 @@ export const LegalPage: React.FC<LegalPageProps> = ({
               </p>
               <div className="flex items-center gap-2 text-xs font-semibold text-[#D9771A]">
                 <Mail className="w-4 h-4" />
-                <a href="mailto:privacy@nitnemtracker.app" className="underline hover:text-[#F28C28]">
-                  privacy@nitnemtracker.app
+                <a href="mailto:info@nitnemtracker.com" className="underline hover:text-[#F28C28]">
+                  info@nitnemtracker.com
                 </a>
               </div>
             </section>
@@ -415,7 +415,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({
                 7. Contact for Legal Matters
               </h3>
               <p className="text-xs text-stone-600">
-                For questions regarding these Terms, contact <strong>legal@nitnemtracker.app</strong>.
+                For questions regarding these Terms, contact <strong>info@nitnemtracker.com</strong>.
               </p>
             </section>
           </article>

@@ -6,7 +6,7 @@ export const HowItWorks: React.FC = () => {
     {
       number: '01',
       title: 'Choose Your Banis',
-      description: 'Select the Nitnem prayers you want to complete.',
+      description: 'Select the Nitnem prayers and Gurbani Path you want to complete.',
       details: 'Choose from Japji Sahib, Jaap Sahib, Tav-Prasad Savaiye, Chaupai Sahib, Anand Sahib, Rehras Sahib, and Kirtan Sohila according to your daily practice.',
       icon: BookOpen,
     },

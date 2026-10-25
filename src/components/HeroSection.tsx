@@ -35,7 +35,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             
             {/* Quiet spiritual lead-in */}
             <div className="text-xs uppercase tracking-widest text-[#D9771A] font-semibold mb-3">
-              Daily Spiritual Discipline
+              Daily Spiritual Discipline · Sikh Nitnem, Bani & Path Habit
             </div>
 
             {/* Problem Headline */}
@@ -55,7 +55,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </h2>
               
               <p className="text-sm text-stone-600 leading-relaxed">
-                Nitnem Tracker helps users build discipline by restricting selected distracting apps until they complete their required Nitnem prayers.
+                Nitnem Tracker helps users build discipline by restricting selected distracting apps until they complete their required daily Nitnem prayers and Gurbani Path.
               </p>
 
               {/* Supported capabilities reassurance */}
