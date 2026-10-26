@@ -1,35 +1,41 @@
 import React from 'react';
 import { Calendar, ShieldAlert, LineChart, Users } from 'lucide-react';
+import { Translations, Language } from '../translations';
 
-export const KeyFeatures: React.FC = () => {
+interface KeyFeaturesProps {
+  t: Translations;
+  lang?: Language;
+}
+
+export const KeyFeatures: React.FC<KeyFeaturesProps> = ({ t }) => {
   const features = [
     {
-      title: 'Custom Prayer Windows',
-      headline: 'Choose different Banis for Morning, Evening and Night.',
-      description: 'Align your Nitnem with the rhythms of the day. Configure your Amrit Vela window for the 5 Banis, Evening window for Rehras Sahib, and Night window for Kirtan Sohila.',
+      title: t.features.card1Title,
+      headline: t.features.card1Headline,
+      description: t.features.card1Desc,
       icon: Calendar,
-      highlight: '3 Custom Routines',
+      highlight: t.features.card1Badge,
     },
     {
-      title: 'App Blocking',
-      headline: 'Restrict selected distracting apps until the required prayers are completed.',
-      description: 'You select which apps get locked (Instagram, YouTube, TikTok, games, or social feeds). They remain unavailable until you check off your prayers for that window.',
+      title: t.features.card2Title,
+      headline: t.features.card2Headline,
+      description: t.features.card2Desc,
       icon: ShieldAlert,
-      highlight: 'Tailored App Lists',
+      highlight: t.features.card2Badge,
     },
     {
-      title: 'Progress and Streaks',
-      headline: 'Track daily, weekly and monthly progress and celebrate consistency.',
-      description: 'Build an unbroken chain of spiritual devotion. View calendar completion heatmaps, monthly completion percentages, and milestone celebrations.',
+      title: t.features.card3Title,
+      headline: t.features.card3Headline,
+      description: t.features.card3Desc,
       icon: LineChart,
-      highlight: 'Milestone Tracking',
+      highlight: t.features.card3Badge,
     },
     {
-      title: 'Parental Guidance',
-      headline: 'Encourage children to develop a regular Nitnem routine through supported device restrictions and supervision.',
-      description: 'Guide children to complete their morning or evening Banis before gaining screen time privileges on family or supervised devices.',
+      title: t.features.card4Title,
+      headline: t.features.card4Headline,
+      description: t.features.card4Desc,
       icon: Users,
-      highlight: 'Family Supervision',
+      highlight: t.features.card4Badge,
     },
   ];
 
@@ -40,13 +46,13 @@ export const KeyFeatures: React.FC = () => {
         {/* Section Header */}
         <div className="max-w-2xl text-left mb-16 sm:mb-20">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#D9771A]">
-            Thoughtfully Crafted
+            {t.features.eyebrow}
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mt-2 text-balance">
-            Designed for Spiritual Focus and Digital Restraint
+            {t.features.title}
           </h2>
           <p className="mt-3 text-base text-stone-600">
-            No endless social feeds. No unnecessary gamification. Just honest tools to put your spiritual duties first every day.
+            {t.features.subtitle}
           </p>
         </div>
 
@@ -83,8 +89,8 @@ export const KeyFeatures: React.FC = () => {
                 </div>
 
                 <div className="mt-6 pt-5 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
-                  <span>Built for simplicity</span>
-                  <span className="text-[#D9771A] font-semibold">Learn more →</span>
+                  <span>{t.features.builtForSimplicity}</span>
+                  <span className="text-[#D9771A] font-semibold">{t.features.learnMore}</span>
                 </div>
               </div>
             );

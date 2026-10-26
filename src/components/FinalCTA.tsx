@@ -2,17 +2,23 @@ import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { StoreButtons } from './StoreButtons';
 import { StoreLinks } from '../types';
+import { Translations, Language } from '../translations';
 
 interface FinalCTAProps {
   links: StoreLinks;
   onPutNitnemFirstClick: () => void;
   onConfigureStoreClick: () => void;
+  onOpenWaitlist?: (platform: 'ios' | 'android' | 'all') => void;
+  t: Translations;
+  lang?: Language;
 }
 
 export const FinalCTA: React.FC<FinalCTAProps> = ({
   links,
   onPutNitnemFirstClick,
   onConfigureStoreClick,
+  onOpenWaitlist,
+  t,
 }) => {
   return (
     <section id="download" className="py-20 sm:py-28 bg-[#1C1917] text-white relative overflow-hidden">
@@ -26,17 +32,17 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
         
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-800/80 border border-stone-700/80 text-[#F28C28] text-xs font-semibold mb-6">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Begin Your Nitnem Journey</span>
+          <span>{t.finalCta.eyebrow}</span>
         </div>
 
         {/* Headline */}
         <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-2xl mx-auto text-balance leading-tight">
-          Your phone can wait. Your Nitnem comes first.
+          {t.finalCta.headline}
         </h2>
 
         {/* Supporting text */}
         <p className="mt-5 text-base sm:text-xl text-stone-300 max-w-xl mx-auto leading-relaxed">
-          “Start building a consistent Nitnem routine, one day at a time.”
+          {t.finalCta.supporting}
         </p>
 
         {/* Action Button & Store links */}
@@ -45,17 +51,18 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
             onClick={onPutNitnemFirstClick}
             className="inline-flex items-center justify-center gap-2 px-9 py-4 text-base font-bold text-white bg-[#F28C28] hover:bg-[#D9771A] active:scale-[0.98] rounded-xl transition-all shadow-lg shadow-[#F28C28]/30 cursor-pointer"
           >
-            <span>Put Nitnem First</span>
+            <span>{t.finalCta.ctaButton}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <div className="flex flex-col items-center gap-3 pt-2">
             <span className="text-xs uppercase tracking-widest text-stone-400 font-medium">
-              Download directly for your mobile device
+              {t.finalCta.downloadDirectly}
             </span>
             <StoreButtons
               links={links}
               onConfigureClick={onConfigureStoreClick}
+              onOpenWaitlist={onOpenWaitlist}
               theme="outline-dark"
               className="justify-center"
             />
@@ -64,7 +71,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
 
         {/* Reassurance text */}
         <div className="mt-12 text-xs text-stone-400 border-t border-stone-800/80 pt-8">
-          Cancel Anytime · Respects your digital privacy · Designed for the Sikh Sangat
+          {t.finalCta.reassurance}
         </div>
 
       </div>

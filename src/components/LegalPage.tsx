@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Shield, FileText, Lock, Users, Mail, Printer, Check, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Shield, FileText, Lock, Users, Mail, Printer, Check, ChevronRight, Globe } from 'lucide-react';
 import { AppLogo } from './AppLogo';
+import { Language } from '../translations';
 
 export type LegalTab = 'privacy' | 'terms' | 'parental';
 
 interface LegalPageProps {
   initialTab?: LegalTab;
   onBackToHome: () => void;
+  lang?: Language;
+  onToggleLanguage?: () => void;
 }
 
 export const LegalPage: React.FC<LegalPageProps> = ({
   initialTab = 'privacy',
   onBackToHome,
+  lang = 'en',
+  onToggleLanguage,
 }) => {
   const [activeTab, setActiveTab] = useState<LegalTab>(initialTab);
   const [copied, setCopied] = useState(false);
@@ -55,11 +60,21 @@ export const LegalPage: React.FC<LegalPageProps> = ({
             </button>
             <div className="h-4 w-px bg-stone-200 hidden sm:block" />
             <div className="hidden sm:block">
-              <AppLogo size="sm" />
+              <AppLogo size="sm" lang={lang} />
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            {onToggleLanguage && (
+              <button
+                onClick={onToggleLanguage}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-stone-700 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 rounded-xl transition-colors cursor-pointer"
+                title="Switch Language / ਭਾਸ਼ਾ ਬਦਲੋ"
+              >
+                <Globe className="w-3.5 h-3.5 text-[#F28C28]" />
+                <span>{lang === 'en' ? 'ਪੰਜਾਬੀ' : 'English'}</span>
+              </button>
+            )}
             <button
               onClick={handleCopyLink}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-stone-600 hover:text-stone-900 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-xl transition-all cursor-pointer"

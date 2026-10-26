@@ -6,6 +6,7 @@ export type StoreTheme = 'dark' | 'light' | 'outline' | 'outline-dark' | 'outlin
 interface StoreButtonsProps {
   links: StoreLinks;
   onConfigureClick?: () => void;
+  onOpenWaitlist?: (platform: 'ios' | 'android') => void;
   className?: string;
   theme?: StoreTheme;
 }
@@ -13,16 +14,22 @@ interface StoreButtonsProps {
 export const StoreButtons: React.FC<StoreButtonsProps> = ({
   links,
   onConfigureClick,
+  onOpenWaitlist,
   className = '',
   theme = 'dark',
 }) => {
-  const handleStoreClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string, platform: string) => {
+  const handleStoreClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string, platformKey: 'ios' | 'android') => {
+    // Top-tier pre-launch waitlist experience: intercept store click to show launch waitlist
+    if (onOpenWaitlist) {
+      e.preventDefault();
+      onOpenWaitlist(platformKey);
+      return;
+    }
+
     if (!url || url === '#' || url === '') {
       e.preventDefault();
       if (onConfigureClick) {
         onConfigureClick();
-      } else {
-        alert(`${platform} link is not configured yet. Configure your app store link in settings.`);
       }
     }
   };
@@ -55,9 +62,9 @@ export const StoreButtons: React.FC<StoreButtonsProps> = ({
         href={links.appleAppStore || '#'}
         target={isConfigured(links.appleAppStore) ? '_blank' : '_self'}
         rel="noopener noreferrer"
-        onClick={(e) => handleStoreClick(e, links.appleAppStore, 'Apple App Store')}
-        className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl transition-all duration-200 ${getContainerStyles()} group`}
-        title={isConfigured(links.appleAppStore) ? 'Download on Apple App Store' : 'App Store link pending configuration'}
+        onClick={(e) => handleStoreClick(e, links.appleAppStore, 'ios')}
+        className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl transition-all duration-200 ${getContainerStyles()} group cursor-pointer`}
+        title="Download on Apple App Store (Launching Soon)"
       >
         <svg
           viewBox="0 0 24 24"
@@ -79,11 +86,11 @@ export const StoreButtons: React.FC<StoreButtonsProps> = ({
       {/* Google Play Store Button */}
       <a
         href={links.googlePlayStore || '#'}
-        target={isConfigured(links.googlePlayStore) ? '_blank' : '_self'}
+        target={isConfigured(links.googlePlayStore) && !onOpenWaitlist ? '_blank' : '_self'}
         rel="noopener noreferrer"
-        onClick={(e) => handleStoreClick(e, links.googlePlayStore, 'Google Play')}
-        className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl transition-all duration-200 ${getContainerStyles()} group`}
-        title={isConfigured(links.googlePlayStore) ? 'Get it on Google Play' : 'Google Play link pending configuration'}
+        onClick={(e) => handleStoreClick(e, links.googlePlayStore, 'android')}
+        className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl transition-all duration-200 ${getContainerStyles()} group cursor-pointer`}
+        title="Get it on Google Play (Launching Soon)"
       >
         <svg
           viewBox="0 0 24 24"

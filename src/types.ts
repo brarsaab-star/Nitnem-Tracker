@@ -3,7 +3,9 @@ export interface StoreLinks {
   googlePlayStore: string;
 }
 
-export type ModalType = 'privacy' | 'terms' | 'parental' | 'contact' | 'config-links' | null;
+export type ModalType = 'privacy' | 'terms' | 'parental' | 'contact' | 'config-links' | 'waitlist' | null;
+
+export type WaitlistPlatform = 'ios' | 'android' | 'all';
 
 export type LegalTabType = 'privacy' | 'terms' | 'parental';
 

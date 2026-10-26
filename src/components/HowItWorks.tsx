@@ -1,27 +1,34 @@
 import React from 'react';
-import { BookOpen, Clock, LockKeyhole, ArrowRight } from 'lucide-react';
+import { BookOpen, Clock, LockKeyhole } from 'lucide-react';
+import { Translations, Language } from '../translations';
 
-export const HowItWorks: React.FC = () => {
+interface HowItWorksProps {
+  t: Translations;
+  lang?: Language;
+}
+
+export const HowItWorks: React.FC<HowItWorksProps> = ({ t, lang = 'en' }) => {
+  const isPa = lang === 'pa';
   const steps = [
     {
-      number: '01',
-      title: 'Choose Your Banis',
-      description: 'Select the Nitnem prayers and Gurbani Path you want to complete.',
-      details: 'Choose from Japji Sahib, Jaap Sahib, Tav-Prasad Savaiye, Chaupai Sahib, Anand Sahib, Rehras Sahib, and Kirtan Sohila according to your daily practice.',
+      number: isPa ? '੦੧' : '01',
+      title: t.howItWorks.steps.step1Title,
+      description: t.howItWorks.steps.step1Desc,
+      details: t.howItWorks.steps.step1Details,
       icon: BookOpen,
     },
     {
-      number: '02',
-      title: 'Set Your Prayer Windows',
-      description: 'Create Morning, Evening and Night routines, choosing which Banis must be completed in each window.',
-      details: 'Define your Amrit Vela, Sandhya (evening), and bedtime windows to match your schedule and keep your spiritual time protected.',
+      number: isPa ? '੦੨' : '02',
+      title: t.howItWorks.steps.step2Title,
+      description: t.howItWorks.steps.step2Desc,
+      details: t.howItWorks.steps.step2Details,
       icon: Clock,
     },
     {
-      number: '03',
-      title: 'Complete Nitnem and Unlock Apps',
-      description: 'Selected distracting apps remain restricted until the configured prayer requirements are fulfilled, subject to supported device capabilities.',
-      details: 'Social media, games, and video streams stay blocked so your mind remains focused on Gurbani first.',
+      number: isPa ? '੦੩' : '03',
+      title: t.howItWorks.steps.step3Title,
+      description: t.howItWorks.steps.step3Desc,
+      details: t.howItWorks.steps.step3Details,
       icon: LockKeyhole,
     },
   ];
@@ -33,13 +40,13 @@ export const HowItWorks: React.FC = () => {
         {/* Section Header */}
         <div className="max-w-2xl text-left mb-16 sm:mb-20">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#D9771A]">
-            Simple 3-Step Routine
+            {t.howItWorks.eyebrow}
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mt-2 text-balance">
-            How Nitnem Tracker Works
+            {t.howItWorks.title}
           </h2>
           <p className="mt-3 text-base text-stone-600">
-            A gentle yet disciplined barrier between smartphone distractions and your spiritual devotion.
+            {t.howItWorks.subtitle}
           </p>
         </div>
 
@@ -78,7 +85,7 @@ export const HowItWorks: React.FC = () => {
                 </div>
 
                 <div className="mt-6 pt-5 border-t border-stone-200/70 flex items-center text-xs font-semibold text-[#D9771A]">
-                  <span>Step {idx + 1} of 3</span>
+                  <span>{t.howItWorks.stepCount(idx + 1, 3)}</span>
                 </div>
               </div>
             );
@@ -88,7 +95,7 @@ export const HowItWorks: React.FC = () => {
         {/* Device capabilities note */}
         <div className="mt-10 text-center">
           <p className="text-xs text-stone-500">
-            * App restriction functionality utilizes native iOS Screen Time API and Android Accessibility/Usage Access services on supported devices.
+            {t.howItWorks.deviceNote}
           </p>
         </div>
 

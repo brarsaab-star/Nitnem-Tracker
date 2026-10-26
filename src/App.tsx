@@ -9,7 +9,9 @@ import { Footer } from './components/Footer';
 import { LegalModals } from './components/LegalModals';
 import { LegalPage } from './components/LegalPage';
 import { StoreConfigModal } from './components/StoreConfigModal';
-import { ModalType, StoreLinks, LegalTabType, CurrentView } from './types';
+import { WaitlistModal } from './components/WaitlistModal';
+import { ModalType, StoreLinks, LegalTabType, CurrentView, WaitlistPlatform } from './types';
+import { Language, translations } from './translations';
 
 const DEFAULT_STORE_LINKS: StoreLinks = {
   appleAppStore: '#',
@@ -41,6 +43,33 @@ export default function App() {
   const [currentView, setCurrentView] = useState<CurrentView>(initialRouting.view);
   const [legalTab, setLegalTab] = useState<LegalTabType>(initialRouting.legalTab);
 
+  // Simple Punjabi / English language state with localStorage persistence
+  const [lang, setLang] = useState<Language>(() => {
+    try {
+      const saved = localStorage.getItem('nitnem_lang');
+      if (saved === 'pa' || saved === 'en') {
+        return saved;
+      }
+    } catch {
+      // ignore
+    }
+    return 'en';
+  });
+
+  const t = translations[lang];
+
+  const toggleLanguage = () => {
+    setLang((prev) => {
+      const next = prev === 'en' ? 'pa' : 'en';
+      try {
+        localStorage.setItem('nitnem_lang', next);
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  };
+
   const [storeLinks, setStoreLinks] = useState<StoreLinks>(() => {
     try {
       const saved = localStorage.getItem('nitnem_store_links');
@@ -54,7 +83,13 @@ export default function App() {
   });
 
   const [activeModal, setActiveModal] = useState<ModalType>(null);
+  const [waitlistPlatform, setWaitlistPlatform] = useState<WaitlistPlatform>('ios');
   const [isConfigOpen, setIsConfigOpen] = useState(false);
+
+  const handleOpenWaitlist = (platform: WaitlistPlatform = 'ios') => {
+    setWaitlistPlatform(platform);
+    setActiveModal('waitlist');
+  };
 
   // Listen to browser back/forward and hash changes
   useEffect(() => {
@@ -113,6 +148,8 @@ export default function App() {
       <LegalPage
         initialTab={legalTab}
         onBackToHome={handleBackToHome}
+        lang={lang}
+        onToggleLanguage={toggleLanguage}
       />
     );
   }
@@ -124,6 +161,9 @@ export default function App() {
         onPutNitnemFirstClick={scrollToDownload}
         onOpenConfig={() => setIsConfigOpen(true)}
         onOpenLegalPage={handleOpenLegalPage}
+        lang={lang}
+        onToggleLanguage={toggleLanguage}
+        t={t}
       />
 
       {/* Main Page Flow */}
@@ -133,22 +173,26 @@ export default function App() {
           links={storeLinks}
           onPutNitnemFirstClick={scrollToDownload}
           onConfigureStoreClick={() => setIsConfigOpen(true)}
+          lang={lang}
+          t={t}
         />
 
         {/* 2. How It Works: 3 simple steps */}
-        <HowItWorks />
+        <HowItWorks t={t} lang={lang} />
 
         {/* 3. Key Features: 4 clean cards */}
-        <KeyFeatures />
+        <KeyFeatures t={t} lang={lang} />
 
         {/* 4. For Parents: Respectful family photo & routine guidance */}
-        <ForParents />
+        <ForParents t={t} lang={lang} />
 
         {/* 5. Final Call to Action */}
         <FinalCTA
           links={storeLinks}
           onPutNitnemFirstClick={scrollToDownload}
           onConfigureStoreClick={() => setIsConfigOpen(true)}
+          t={t}
+          lang={lang}
         />
       </main>
 
@@ -158,6 +202,9 @@ export default function App() {
         onOpenModal={(type) => setActiveModal(type)}
         onOpenLegalPage={handleOpenLegalPage}
         onConfigureStoreClick={() => setIsConfigOpen(true)}
+        t={t}
+        lang={lang}
+        onToggleLanguage={toggleLanguage}
       />
 
       {/* Interactive Modals: Privacy Policy, Terms of Use, Contact Us */}
@@ -170,6 +217,8 @@ export default function App() {
           setIsConfigOpen(true);
         }}
         onOpenFullLegalPage={handleOpenLegalPage}
+        lang={lang}
+        t={t}
       />
 
       {/* Store Link & Logo Configuration Modal */}

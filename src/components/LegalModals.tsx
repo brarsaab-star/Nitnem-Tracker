@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Shield, FileText, Mail, CheckCircle, Smartphone, Loader2 } from 'lucide-react';
 import { ModalType, StoreLinks, LegalTabType } from '../types';
 import { StoreButtons } from './StoreButtons';
+import { Language, Translations, translations } from '../translations';
 
 interface LegalModalsProps {
   activeModal: ModalType;
@@ -9,6 +10,8 @@ interface LegalModalsProps {
   links: StoreLinks;
   onOpenStoreConfig: () => void;
   onOpenFullLegalPage?: (tab: LegalTabType) => void;
+  lang?: Language;
+  t?: Translations;
 }
 
 export const LegalModals: React.FC<LegalModalsProps> = ({
@@ -17,7 +20,10 @@ export const LegalModals: React.FC<LegalModalsProps> = ({
   links,
   onOpenStoreConfig,
   onOpenFullLegalPage,
+  lang = 'en',
+  t,
 }) => {
+  const currentT = t || translations[lang];
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [contactName, setContactName] = useState('');
@@ -204,10 +210,10 @@ export const LegalModals: React.FC<LegalModalsProps> = ({
               </div>
               <div>
                 <h3 className="text-xl font-bold font-display text-stone-900">
-                  Contact Us
+                  {currentT.contactModal.title}
                 </h3>
                 <span className="text-xs text-stone-500">
-                  Have feedback, questions, or ideas for Nitnem Tracker?
+                  {currentT.contactModal.subtitle}
                 </span>
               </div>
             </div>
@@ -215,22 +221,22 @@ export const LegalModals: React.FC<LegalModalsProps> = ({
             {contactSubmitted ? (
               <div className="py-8 text-center space-y-3">
                 <CheckCircle className="w-12 h-12 text-[#F28C28] mx-auto stroke-[2]" />
-                <h4 className="text-base font-bold text-stone-900">Fateh! Message Delivered</h4>
+                <h4 className="text-base font-bold text-stone-900">{currentT.contactModal.successTitle}</h4>
                 <p className="text-xs text-stone-600 max-w-sm mx-auto leading-relaxed">
-                  Your inquiry has been sent directly to <strong className="text-stone-800">info@nitnemtracker.com</strong>. We will review your message and reply to your email address promptly.
+                  {currentT.contactModal.successDesc}
                 </p>
                 <div className="pt-3 flex justify-center gap-3">
                   <button
                     onClick={() => setContactSubmitted(false)}
                     className="px-4 py-2 text-xs font-medium text-stone-700 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 rounded-xl transition-colors cursor-pointer"
                   >
-                    Send Another Message
+                    {currentT.contactModal.sendAnother}
                   </button>
                   <button
                     onClick={onClose}
                     className="px-5 py-2 text-xs font-semibold text-white bg-stone-900 rounded-xl hover:bg-stone-800 transition-colors cursor-pointer"
                   >
-                    Close
+                    {currentT.contactModal.close}
                   </button>
                 </div>
               </div>
@@ -238,49 +244,49 @@ export const LegalModals: React.FC<LegalModalsProps> = ({
               <form onSubmit={handleContactSubmit} className="space-y-3 pt-2">
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 mb-1">
-                    Your Name
+                    {currentT.contactModal.nameLabel}
                   </label>
                   <input
                     type="text"
                     required
                     value={contactName}
                     onChange={(e) => setContactName(e.target.value)}
-                    placeholder="e.g. Harpreet Singh"
+                    placeholder={currentT.contactModal.namePlaceholder}
                     className="w-full px-3.5 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F28C28] text-stone-900"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 mb-1">
-                    Email Address
+                    {currentT.contactModal.emailLabel}
                   </label>
                   <input
                     type="email"
                     required
                     value={contactEmail}
                     onChange={(e) => setContactEmail(e.target.value)}
-                    placeholder="you@domain.com"
+                    placeholder={currentT.contactModal.emailPlaceholder}
                     className="w-full px-3.5 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F28C28] text-stone-900"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-stone-700 mb-1">
-                    Message or Suggestion
+                    {currentT.contactModal.messageLabel}
                   </label>
                   <textarea
                     rows={4}
                     required
                     value={contactMessage}
                     onChange={(e) => setContactMessage(e.target.value)}
-                    placeholder="Share any thoughts, requests, or questions regarding Nitnem Tracker..."
+                    placeholder={currentT.contactModal.messagePlaceholder}
                     className="w-full px-3.5 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F28C28] text-stone-900 resize-none"
                   />
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-stone-100">
                   <span className="text-[11px] text-stone-500">
-                    Direct recipient: <a href="mailto:info@nitnemtracker.com" className="underline text-stone-800 font-medium">info@nitnemtracker.com</a>
+                    {currentT.contactModal.directRecipient} <a href="mailto:info@nitnemtracker.com" className="underline text-stone-800 font-medium">info@nitnemtracker.com</a>
                   </span>
                   <button
                     type="submit"
@@ -290,10 +296,10 @@ export const LegalModals: React.FC<LegalModalsProps> = ({
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        <span>Sending to info@nitnemtracker.com...</span>
+                        <span>{currentT.contactModal.sending}</span>
                       </>
                     ) : (
-                      <span>Send to info@nitnemtracker.com</span>
+                      <span>{currentT.contactModal.sendButton}</span>
                     )}
                   </button>
                 </div>

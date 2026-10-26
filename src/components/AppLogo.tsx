@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { Language } from '../translations';
 
 interface AppLogoProps {
   className?: string;
   size?: 'sm' | 'md' | 'lg';
   showText?: boolean;
+  lang?: Language;
 }
 
 export const AppLogo: React.FC<AppLogoProps> = ({
   className = '',
   size = 'md',
   showText = true,
+  lang = 'en',
 }) => {
   const [imageError, setImageError] = useState(false);
   const [customLogoUrl, setCustomLogoUrl] = useState<string | null>(null);
@@ -92,7 +95,7 @@ export const AppLogo: React.FC<AppLogoProps> = ({
             Nitnem Tracker
           </span>
           <span className="text-[10px] uppercase tracking-wider text-stone-500 font-medium mt-0.5">
-            Put Waheguru First
+            {lang === 'pa' ? 'ਵਾਹਿਗੁਰੂ ਨੂੰ ਪਹਿਲਾਂ ਰੱਖੋ' : 'Put Waheguru First'}
           </span>
         </div>
       )}

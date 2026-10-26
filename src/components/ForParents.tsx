@@ -1,8 +1,16 @@
 import React from 'react';
 import { Heart, ShieldCheck, Clock, CheckCircle2, Lock } from 'lucide-react';
 import familyImage from '../assets/images/sikh_family_prayer_1792742286667.jpg';
+import { Translations, Language } from '../translations';
 
-export const ForParents: React.FC = () => {
+interface ForParentsProps {
+  t: Translations;
+  lang?: Language;
+}
+
+export const ForParents: React.FC<ForParentsProps> = ({ t, lang = 'en' }) => {
+  const isPa = lang === 'pa';
+
   return (
     <section id="for-parents" className="py-20 sm:py-28 bg-white border-t border-stone-200/80">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +31,7 @@ export const ForParents: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-5 right-5 text-white">
                 <p className="text-xs font-medium opacity-90 drop-shadow-xs">
-                  Passing spiritual values and Nitnem habits to the next generation.
+                  {t.parents.imageCaption}
                 </p>
               </div>
             </div>
@@ -33,20 +41,20 @@ export const ForParents: React.FC = () => {
               <div className="flex items-center justify-between pb-3 border-b border-stone-200/70">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-full bg-[#FFF7ED] text-[#F28C28] flex items-center justify-center font-bold text-xs">
-                    KJ
+                    {isPa ? 'ਕੌਰ' : 'KJ'}
                   </div>
                   <div>
                     <span className="text-xs font-bold text-stone-900 block leading-none">
-                      Child Profile: Kirpa Kaur
+                      {t.parents.childProfileLabel}
                     </span>
                     <span className="text-[10px] text-stone-500">
-                      Supervised Family Device Mode
+                      {t.parents.supervisedMode}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 text-[11px] font-semibold text-stone-700 bg-white border border-stone-200 px-2.5 py-1 rounded-lg">
                   <Lock className="w-3 h-3 text-[#F28C28]" />
-                  <span>PIN Protected</span>
+                  <span>{t.parents.pinProtected}</span>
                 </div>
               </div>
 
@@ -54,7 +62,9 @@ export const ForParents: React.FC = () => {
                 <div className="flex items-center justify-between text-xs p-2 bg-white rounded-xl border border-stone-200/60">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-[#F28C28]" />
-                    <span className="font-medium text-stone-800">Japji Sahib Completed</span>
+                    <span className="font-medium text-stone-800">
+                      {isPa ? 'ਜਪੁਜੀ ਸਾਹਿਬ ਪੂਰਾ ਹੋਇਆ' : 'Japji Sahib Completed'}
+                    </span>
                   </div>
                   <span className="text-[11px] text-stone-500 font-mono">07:10 AM</span>
                 </div>
@@ -62,14 +72,18 @@ export const ForParents: React.FC = () => {
                 <div className="flex items-center justify-between text-xs p-2 bg-white rounded-xl border border-stone-200/60">
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-amber-500" />
-                    <span className="font-medium text-stone-800">Chaupai Sahib (5 mins required)</span>
+                    <span className="font-medium text-stone-800">
+                      {t.parents.pendingBani}
+                    </span>
                   </div>
-                  <span className="text-[11px] text-amber-600 font-semibold">Pending</span>
+                  <span className="text-[11px] text-amber-600 font-semibold">
+                    {t.parents.pendingStatus}
+                  </span>
                 </div>
               </div>
 
               <div className="mt-3 pt-2 text-[11px] text-stone-500 text-center">
-                Tablet apps remain locked until Chaupai Sahib prayer check-in is complete.
+                {t.parents.cardFooter}
               </div>
             </div>
 
@@ -78,17 +92,17 @@ export const ForParents: React.FC = () => {
           {/* Right Column: Copy & Value Proposition */}
           <div className="lg:col-span-6 flex flex-col justify-center text-left">
             <span className="text-xs font-semibold uppercase tracking-widest text-[#D9771A]">
-              Spiritual Upbringing
+              {t.parents.eyebrow}
             </span>
 
             {/* Headline */}
             <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mt-2 text-balance leading-snug">
-              Help Your Children Connect With Waheguru.
+              {t.parents.title}
             </h2>
 
             {/* Description */}
             <p className="mt-5 text-base sm:text-lg text-stone-600 leading-relaxed">
-              “Encourage your children to put Nitnem before distractions and develop healthy digital habits through daily prayer routines.”
+              {t.parents.description}
             </p>
 
             {/* Respectful benefits */}
@@ -99,10 +113,10 @@ export const ForParents: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-stone-900">
-                    No Arguments Over Screen Time
+                    {t.parents.benefit1Title}
                   </h4>
                   <p className="text-xs text-stone-600 mt-0.5">
-                    Clear, automated boundaries replace daily friction. Children know entertainment apps unlock only after their spiritual duty is fulfilled.
+                    {t.parents.benefit1Desc}
                   </p>
                 </div>
               </div>
@@ -113,10 +127,10 @@ export const ForParents: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-stone-900">
-                    Forming Lifelong Nitnem Habits
+                    {t.parents.benefit2Title}
                   </h4>
                   <p className="text-xs text-stone-600 mt-0.5">
-                    By associating the start of each morning with Gurbani rather than algorithms, children build rooted spiritual resilience that stays with them for life.
+                    {t.parents.benefit2Desc}
                   </p>
                 </div>
               </div>
@@ -127,17 +141,17 @@ export const ForParents: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-stone-900">
-                    Supported Device Supervision
+                    {t.parents.benefit3Title}
                   </h4>
                   <p className="text-xs text-stone-600 mt-0.5">
-                    Configure restrictions directly on the child’s device with a parental PIN, or via supported OS family controls on iOS and Android.
+                    {t.parents.benefit3Desc}
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="mt-8 pt-6 border-t border-stone-100 text-xs text-stone-500">
-              * Note: Parental controls operate via local device PIN protection and standard OS Screen Time / Accessibility frameworks supported on the child's phone or tablet.
+              {t.parents.deviceNote}
             </div>
 
           </div>
