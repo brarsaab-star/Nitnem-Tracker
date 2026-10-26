@@ -173,6 +173,7 @@ export default function App() {
           links={storeLinks}
           onPutNitnemFirstClick={scrollToDownload}
           onConfigureStoreClick={() => setIsConfigOpen(true)}
+          onOpenWaitlist={handleOpenWaitlist}
           lang={lang}
           t={t}
         />
@@ -189,8 +190,9 @@ export default function App() {
         {/* 5. Final Call to Action */}
         <FinalCTA
           links={storeLinks}
-          onPutNitnemFirstClick={scrollToDownload}
+          onPutNitnemFirstClick={() => handleOpenWaitlist('all')}
           onConfigureStoreClick={() => setIsConfigOpen(true)}
+          onOpenWaitlist={handleOpenWaitlist}
           t={t}
           lang={lang}
         />
@@ -202,6 +204,7 @@ export default function App() {
         onOpenModal={(type) => setActiveModal(type)}
         onOpenLegalPage={handleOpenLegalPage}
         onConfigureStoreClick={() => setIsConfigOpen(true)}
+        onOpenWaitlist={handleOpenWaitlist}
         t={t}
         lang={lang}
         onToggleLanguage={toggleLanguage}
@@ -217,6 +220,15 @@ export default function App() {
           setIsConfigOpen(true);
         }}
         onOpenFullLegalPage={handleOpenLegalPage}
+        lang={lang}
+        t={t}
+      />
+
+      {/* App Store & Google Play Launch Waitlist Modal */}
+      <WaitlistModal
+        isOpen={activeModal === 'waitlist'}
+        onClose={() => setActiveModal(null)}
+        initialPlatform={waitlistPlatform}
         lang={lang}
         t={t}
       />
